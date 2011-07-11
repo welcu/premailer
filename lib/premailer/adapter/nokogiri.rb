@@ -187,12 +187,12 @@ class Premailer
 
         doc = nil
 
-        # Default encoding is ASCII-8BIT (binary) per http://groups.google.com/group/nokogiri-talk/msg/0b81ef0dc180dc74
+        # Just Force UTF-8 for now.
         if thing.is_a?(String) and RUBY_VERSION =~ /1.9/
-          thing = thing.force_encoding('ASCII-8BIT').encode!
+          thing = thing.force_encoding('UTF-8').encode!
           doc = ::Nokogiri::HTML(thing) {|c| c.noent.recover }
         else
-          doc = ::Nokogiri::HTML(thing, nil, 'ASCII-8BIT') {|c| c.noent.recover }
+          doc = ::Nokogiri::HTML(thing, nil, 'UTF-8') {|c| c.noent.recover }
         end
 
         return doc
