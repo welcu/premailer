@@ -394,13 +394,15 @@ public
     u = uri.kind_of?(URI) ? uri : URI.parse(uri.to_s)
     u.normalize!
     newpath = u.path
-    while newpath.gsub!(%r{([^/]+)/\.\./?}) { |match|
-        $1 == '..' ? match : ''
-      } do end
+    if newpath
+      while newpath.gsub!(%r{([^/]+)/\.\./?}) { |match|
+          $1 == '..' ? match : ''
+        } do end
       newpath = newpath.gsub(%r{/\./}, '/').sub(%r{/\.\z}, '/')
       u.path = newpath
-      u.to_s
     end
+    u.to_s
+  end
 
   # Check <tt>CLIENT_SUPPORT_FILE</tt> for any CSS warnings
   def check_client_support # :nodoc:
